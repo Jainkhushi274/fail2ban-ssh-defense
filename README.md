@@ -29,7 +29,35 @@ It detects brute‑force login attempts and automatically bans malicious IPs.
 4. Check status:
    ```
    sudo fail2ban-client status sshd
-## 📸 Screenshots
+
+   
+## jail.local configuration
+- File content:
+  ```
+  [sshd]
+  enabled = true          # Turn on protection for SSH
+  port = ssh              # Service port (default SSH)
+  filter = sshd           # Use the default sshd filter
+  backend = systemd       # Use systemd-journald for logs
+  maxretry = 3            # Number of failed attempts before ban
+  bantime = 600           # Ban duration in seconds (10 minutes)
+  findtime = 300          # Time window in seconds (5 minutes)
+  ignoreself = true       # Don’t ban your own IP
+  
+- Explanation of Each Setting :
+  - [sshd] → Jail section for SSH service.
+  - enabled = true → Activates this jail.
+  - port = ssh → Protects the SSH port (default 22).
+  - filter = sshd → Uses Fail2ban’s built‑in SSH filter (no need for custom regex unless you want).
+  - backend = systemd → Reads logs from systemd-journald (important for Kali).
+  - maxretry = 3 → After 3 failed login attempts, the IP is banned.
+  - bantime = 600 → IP stays banned for 10 minutes.
+  - findtime = 300 → Fail2ban looks at failed attempts within a 5‑minute window.
+  - ignoreself = true → Prevents banning your own machine.
+ 
+    
+
+##  Screenshots
 - Failed SSH Attempts:
   <img width="1920" height="945" alt="failedloginattempts" src="https://github.com/user-attachments/assets/d83ed32b-fb03-484c-af82-43dbd6ac7127" />
 - Fail2ban Status (Active Ban):
