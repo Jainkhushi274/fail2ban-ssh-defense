@@ -1,0 +1,9 @@
+[sshd]
+enabled = true          # Turn on protection for SSH
+port = ssh              # Service port (default SSH)
+filter = sshd           # Use the default sshd filter
+backend = systemd       # Use systemd-journald for logs
+maxretry = 3            # Number of failed attempts before ban
+bantime = 600           # Ban duration in seconds (10 minutes)
+findtime = 300          # Time window in seconds (5 minutes)
+ignoreself = true       # Don’t ban your own IP
